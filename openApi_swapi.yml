@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: SW api
+  description: |-
+    Proyecto con 3 apis de consulta y creación de planetas de star wars
+    
+    Some useful links:
+    - [API Star Wars ](https://swapi.py4e.com/)
+
+  contact:
+    email: miguel.inga.02@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://m4y6so3yh2.execute-api.us-east-1.amazonaws.com/
+tags:
+  - name: planets
+    description: Everything about Star Wars planets
+  - name: people
+    description: Everything about Star Wars people
+paths:
+  /planets:
+    get:
+      tags:
+        - planets
+      summary: Get all planets
+      description: Get all Star Wars planets
+      operationId: getPlanets
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Planet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Planet'
+        '404':
+          description: Not found
+  /planet:
+    post:
+      tags:
+        - planets
+      summary: Add a new planet to the DynamoDB
+      description: Add a new Star Wars planet to the DynamoDB
+      operationId: addPlanet
+      requestBody:
+        description: Create a new Star Wars plane in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Planet'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Planet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Planet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Planet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Planet'
+        '404':
+          description: Not found
+          
+  /people:
+    get:
+      tags:
+        - people
+      summary: Get all planets
+      description: Get all Star Wars planets
+      operationId: getPeople
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+        '404':
+          description: Not found
+ 
+components:
+  schemas:
+    Planet:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: Tatooine
+        diametro:
+          type: string
+          example: 10465
+        periodo_rotacion:
+          type: string
+          example: 23
+        periodo_orbita:
+          type: string
+          example: 304
+        poblacion:
+          type: string
+          example: 200000
+        clima:
+          type: string
+          example: arid
+        superficie_agua:
+          type: string
+          example: 1
+        gravedad:
+          type: string
+          example: 1standard
+    People:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: Luke Skywalker
+        anio_nacimiento:
+          type: string
+          example: 19BBY
+        color_ojo:
+          type: string
+          example: blue
+        color_cabello:
+          type: string
+          example: blond
+        talla:
+          type: string
+          example: 172
+        masa:
+          type: string
+          example: 77
+        color_piel:
+          type: string
+          example: fair
+      xml:
+        name: planet
+  requestBodies:
+    Planet:
+      description: Planet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Planet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Planet'

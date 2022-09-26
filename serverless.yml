@@ -1,0 +1,51 @@
+service: planet-serverless-crud
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: '20201221'
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:070535722781:table/PlanetsTable
+
+plugins:
+  - serverless-offline
+
+functions:
+  get-sw-planets:
+    handler: starWarsRepo.getSWPlanets
+    events:
+      - httpApi:
+          path: /planets
+          method: get
+  add-sw-planet:
+    handler: starWarsRepo.addPlanet
+    events:
+      - httpApi:
+          path: /planet
+          method: post
+  get-sw-people:
+    handler: starWarsRepo.getSWPeople
+    events:
+      - httpApi:
+          path: /people
+          method: get
+resources:
+  Resources:
+    PlanetsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PlanetsTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+  
