@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: SW api
   description: |-
-    Proyecto con 3 apis de consulta y creación de planetas de star wars
+    Proyecto con 4 apis de consulta y creación de planetas de star wars
     
     Some useful links:
     - [API Star Wars ](https://swapi.py4e.com/)
@@ -72,7 +72,25 @@ paths:
                 $ref: '#/components/schemas/Planet'
         '404':
           description: Not found
-          
+  /planetsdb:
+    get:
+      tags:
+        - planets
+      summary: Get all planets
+      description: Get all Star Wars planets
+      operationId: getPlanetsDB
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Planet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Planet'
+        '404':
+          description: Not found 
   /people:
     get:
       tags:

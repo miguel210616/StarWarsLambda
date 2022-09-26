@@ -101,6 +101,26 @@ module.exports.addPlanet = async (event) => {
     }
 }
 
+module.exports.getSWPlanetsDB = async () => {
+    try{
+        const dynamodb = new AWS.DynamoDB.DocumentClient();
+        
+        const result = await dynamodb.scan({
+            TableName: 'PlanetsTable'
+        }).promise();
+        const planets = result.Items;
+        
+        return{
+            status:200,
+            body: {
+                planets
+            }
+        }
+    }catch(error){
+        console.log(error);
+    }
+}
+
 
 module.exports.getSWPeople = async () => {
     try{

@@ -23,6 +23,12 @@ functions:
       - httpApi:
           path: /planets
           method: get
+  get-sw-planets-db:
+    handler: starWarsRepo.getSWPlanetsDB
+    events:
+      - httpApi:
+          path: /planetsdb
+          method: get
   add-sw-planet:
     handler: starWarsRepo.addPlanet
     events:
